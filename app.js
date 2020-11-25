@@ -10,8 +10,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const managerInfo = () => {
-    inquirer.prompt([
+const employees = [];
+
+const managerInfo = async () => {
+    await inquirer.prompt([
         {
             type: 'input',
             name: 'name',
@@ -34,11 +36,14 @@ const managerInfo = () => {
         }
     ]).then(response => {
         const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
+        employees.push(manager);
+        return manager;
     });
+    addRole();
 };
 
-const engineerInfo = () => {
-    inquirer.prompt([
+const engineerInfo = async () => {
+    await inquirer.prompt([
         {
             type: 'input',
             name: 'name',
@@ -61,8 +66,91 @@ const engineerInfo = () => {
         }
     ]).then(response => {
         const engineer = new Engineer(response.name, response.id, response.email, response.github);
+        employees.push(engineer);
+        return engineer;
+    });
+    addRole();
+};
+
+const internInfo = async () => {
+    await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the intern's name?"
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the intern's ID?"
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the intern's email address?"
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: "What school did the intern attend?"
+        }
+    ]).then(response => {
+        const intern = new Intern(response.name, response.id, response.email, response.school);
+        employees.push(intern);
+        return intern;
+    });
+    addRole();
+};
+
+const whatRole = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'role',
+            message: "Which employee role would you like to input?",
+            choices: ['Manager', 'Engineer', 'Intern']
+        }
+    ]).then(response => {
+        switch (response.role) {
+            case 'Manager':
+                managerInfo();
+                break;
+            case 'Engineer':
+                engineerInfo();
+                break;
+            case 'Intern':
+                internInfo();
+                break;
+            default:
+                return;
+        };
     });
 };
+
+const addRole = () => {
+    inquirer.prompt([
+        {
+            type: 'confirm',
+            name: 'addMore',
+            message: "Would you like to add another employee?"
+        }
+    ]).then(response => {
+        if (response.addMore) {
+            whatRole();
+        } else {
+            console.log("Have a great rest of your day!");
+            buildTeam();
+        };
+    });
+};
+
+buildTeam = () => {
+    fs.writeFile('team.html', render(employees), err => {
+        err ? console.log(err) : console.log("Team profile created!");
+    })
+}
+
+whatRole();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
