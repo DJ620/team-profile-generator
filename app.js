@@ -145,10 +145,10 @@ const addRole = () => {
 };
 
 buildTeam = () => {
-    fs.writeFile('team.html', render(employees), err => {
+    fs.writeFile(outputPath, render(employees), err => {
         err ? console.log(err) : console.log("Team profile created!");
-    })
-}
+    });
+};
 
 whatRole();
 // Write code to use inquirer to gather information about the development team members,
