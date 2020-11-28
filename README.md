@@ -12,11 +12,11 @@ The code used to create this application has passed all given tests, using the n
 
 To use this application, you must have Node.js on your system, and download the npm package 'Inquirer'. To do this, open your terminal, navigate to the proper file, and type in 'npm init -y'. The '-y' is optional, but streamlines the process by naming the file based on the parent folder. This process will create a package.json file within your root directory.
 
-![npm init -y](img/init.png)
+![npm init -y](assets/img/init.png)
 
 Once you have created the package.json, go back to the terminal and type 'npm i inquirer' and hit enter. This will download the Inquirer package onto your computer and store it in the root directory of your file structure. 
 
-![npm i inquirer](img/install.png)
+![npm i inquirer](assets/img/install.png)
 
 Once you have completed these steps, go back once again to the terminal, and type in 'node app.js' and answer each of the prompts with the information for each team member. Once you have finished, you will see an html file in the 'output' folder with the name 'team.html' that has all of the information for the team member profiles inside.
 
