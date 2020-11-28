@@ -10,8 +10,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./assets/lib/htmlRenderer");
 
+// Empty array that each employee object will be pushed into
 const employees = [];
 
+// Creates an oject with info about a manager based on user input
 const managerInfo = async () => {
     await inquirer.prompt([
         {
@@ -42,6 +44,7 @@ const managerInfo = async () => {
     addRole();
 };
 
+// Creates an oject with info about an engineer based on user input
 const engineerInfo = async () => {
     await inquirer.prompt([
         {
@@ -72,6 +75,7 @@ const engineerInfo = async () => {
     addRole();
 };
 
+// Creates an oject with info about an intern based on user input
 const internInfo = async () => {
     await inquirer.prompt([
         {
@@ -102,6 +106,7 @@ const internInfo = async () => {
     addRole();
 };
 
+// This function prompts the user to select which type of employee they want to enter information about
 const whatRole = () => {
     inquirer.prompt([
         {
@@ -127,6 +132,7 @@ const whatRole = () => {
     });
 };
 
+// This function checks if the user would like to add more profiles or is done
 const addRole = () => {
     inquirer.prompt([
         {
@@ -144,6 +150,7 @@ const addRole = () => {
     });
 };
 
+// This function calls the render function and dynamically creates the team.html file
 buildTeam = () => {
     fs.writeFile(outputPath, render(employees), err => {
         err ? console.log(err) : console.log("Team profile created!");
